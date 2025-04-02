@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROBOTICS 254</title>
+    <style>
+        /* Basic Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #0c1a33;
+            color: white;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        /* Matrix Animation */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Header Animation */
+        .header {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: bold;
+            margin-top: 50px;
+            animation: changeColor 2s infinite;
+        }
+
+        @keyframes changeColor {
+            0% { color: #ff0000; }
+            25% { color: #00ff00; }
+            50% { color: #0000ff; }
+            75% { color: #ff00ff; }
+            100% { color: #ffff00; }
+        }
+
+        /* Robot Logo */
+        .logo {
+            display: block;
+            margin: 0 auto;
+            width: 100px;
+            height: 100px;
+            animation: moveLogo 5s infinite linear;
+        }
+
+        /* Moving Robot Animation */
+        @keyframes moveLogo {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(100vw); }
+        }
+
+        /* Robot Text Animation */
+        .robot-text {
+            font-size: 1.5rem;
+            text-align: center;
+            text-transform: uppercase;
+            animation: blinkText 2s infinite;
+            margin: 20px;
+        }
+
+        @keyframes blinkText {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* Form Styles */
+        .container {
+            width: 70%;
+            margin: 50px auto;
+            background-color: #1d2a47;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .form-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        input[type="text"], input[type="password"], input[type="email"], input[type="phone"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #3a4b6c;
+            background-color: #1d2a47;
+            color: white;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #00bfff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: white;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: #0099cc;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Animations */
+        .robots-animation {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            animation: matrixAnimation 10s infinite;
+        }
+
+        .robot-icon {
+            font-size: 2rem;
+            animation: robotMovement 5s infinite linear;
+        }
+
+        .robot-left {
+            animation-direction: reverse;
+        }
+
+        /* Matrix Animation */
+        @keyframes matrixAnimation {
+            0% { bottom: -100%; }
+            100% { bottom: 0; }
+        }
+
+        @keyframes robotMovement {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(100vw); }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Matrix Background -->
+    <canvas id="matrixCanvas"></canvas>
+
+    <div class="header">ROBOTICS 254</div>
+
+    <p class="robot-text">GET KSH 100K FOR GIVING YOUR VOICE TO A ROBOT. OFFER BROUGHT TO YOU BY PROMOBOT IN PARTNERSHIP SAFARICOM AND KCB BANK</p>
+
+    <div class="robots-animation">
+        <div class="robot-icon robot-left">🤖</div>
+        <div class="robot-icon">🤖</div>
+        <div class="robot-icon robot-left">🤖</div>
+    </div>
+
+    <div class="container" id="login-form">
+        <div class="form-title">Login Form</div>
+        <form action="application.html">
+            <div class="form-group">
+                <label for="phone">Phone Number (+2547XXXXXXXX):</label>
+                <input type="text" id="phone" name="phone" placeholder="Enter your phone number" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <a href="forgot-password.html">Forgot password?</a>
+            <button type="submit" class="btn">Login</button>
+        </form>
+
+        <div class="footer">
+            <p>Not a member? <a href="#" onclick="showSignupForm()">Signup now</a></p>
+        </div>
+    </div>
+
+    <!-- Registration Form -->
+    <div class="container" id="signup-form" style="display: none;">
+        <div class="form-title">Sign Up</div>
+        <form action="application.html">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number (+2547XXXXXXXX):</label>
+                <input type="text" id="phone" name="phone" placeholder="Enter your phone number" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password:</label>
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+            </div>
+            <button type="submit" class="btn">Register</button>
+        </form>
+    </div>
+
+    <script>
+        function showSignupForm() {
+            document.getElementById("login-form").style.display = "none";
+            document.getElementById("signup-form").style.display = "block";
+        }
+
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".split("");
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array.from({ length: columns }).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0F0';
+            ctx.font = `${fontSize}px monospace`;
+
+            drops.forEach((y, i) => {
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                const x = i * fontSize;
+                ctx.fillText(text, x, y * fontSize);
+
+                if (y * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            });
+        }
+
+        setInterval(drawMatrix, 50);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>

